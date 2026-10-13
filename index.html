@@ -163,6 +163,8 @@
   .stepper li{position:relative}
   .stepper li+li::before{content:"";position:absolute;top:16px;left:calc(-50% + 22px);width:calc(100% - 44px);border-top:2px dashed #CFCFC4}
   .stepper li.reached::before{border-top-style:solid;border-top-color:var(--gold-d)}
+  .stepper button:not(:disabled){cursor:pointer}
+  .stepper button:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:6px}
   .stepper button{display:grid;justify-items:center;gap:6px;width:100%;padding:0;border:0;background:none;font:11px/1.3 var(--sans);color:var(--muted);text-align:center;cursor:default}
   .step-paw{position:relative;z-index:1;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#fff;color:#B6BCB0}
   .step-paw .icon{width:22px;height:22px}
@@ -180,7 +182,7 @@
   .field>label{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;font-weight:600;color:var(--ink)}
   .field>label .req{color:var(--muted);font-weight:400}
   .field>label .optional{font-weight:400;font-size:12px;color:var(--muted)}
-  .field input[type=text],.field textarea{display:block;width:100%;margin-top:8px;padding:12px 13px;border:1px solid #D3D3CA;border-radius:6px;background:#fff;color:var(--ink);font:14px/1.4 var(--sans)}
+  .field input[type=text],.field input[type=email],.field input[type=tel],.field textarea{display:block;width:100%;margin-top:8px;padding:12px 13px;border:1px solid #D3D3CA;border-radius:6px;background:#fff;color:var(--ink);font:14px/1.4 var(--sans)}
   .field textarea{resize:vertical;min-height:64px}
   .field ::placeholder{color:#8F9992}
   .field input:focus,.field textarea:focus{outline:2px solid var(--teal);outline-offset:0;border-color:var(--teal)}
@@ -207,6 +209,85 @@
   .form-status{margin-top:14px;padding:10px 12px;border-radius:6px;background:var(--tint);font-size:13px;color:var(--ink)}
   .panel-footnote{display:flex;justify-content:center;align-items:center;gap:6px;margin-top:16px;font-size:11.5px;color:var(--muted)}
   .panel-footnote .icon{width:14px;height:14px}
+
+
+  /* Steps 2 to 4 */
+  .step-pane[hidden],.panel-note[hidden],.order-done[hidden],.step-heading[hidden],.stepper[hidden],.panel-footnote[hidden]{display:none}
+  .mat-box{display:grid;gap:6px;padding:14px 16px;margin-bottom:24px;background:#F1F4E8;border:1px solid #CFD8BE;--r:9px}
+  .mat-label{font-size:12px;color:var(--muted)}
+  .mat-name{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--ink)}
+  .mat-name .icon{color:var(--teal);width:16px;height:16px}
+  .mat-box p{margin:2px 0 0;font-size:12.5px;line-height:1.55}
+  .opt-group{border:0;margin:0 0 22px;padding:0;min-width:0}
+  .opt-group legend{padding:0;margin-bottom:9px;font-size:13px;font-weight:600;color:var(--ink)}
+  .choice-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  .choice{position:relative;display:block;cursor:pointer}
+  .choice input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+  .choice-face{display:flex;align-items:center;gap:8px;height:100%;padding:12px 11px;border:1px solid #D3D3CA;border-radius:8px;background:#fff;font-size:13px;line-height:1.3;color:var(--ink);transition:border-color .15s,background-color .15s}
+  .choice-face::before{content:"";flex:none;width:15px;height:15px;border-radius:50%;border:1.5px solid #9AA39B;background:#fff}
+  .choice:hover .choice-face{border-color:#B2BAB0}
+  .choice input:checked+.choice-face{border-color:var(--green);background:var(--tint)}
+  .choice input:checked+.choice-face::before{border-color:var(--green);background:radial-gradient(circle,var(--green) 0 4px,#fff 4.6px)}
+  .choice input:focus-visible+.choice-face{outline:2px solid var(--teal);outline-offset:2px}
+  .swatch-row .choice-face{flex-direction:column;justify-content:center;gap:9px;padding:14px 8px;text-align:center}
+  .swatch-row .choice-face::before{display:none}
+  .sw{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--sw);box-shadow:inset 0 0 0 1px rgba(0,0,0,.14)}
+  .sw .icon{width:16px;height:16px;color:var(--sw-ink);stroke-width:2.6;opacity:0;transform:scale(.5);transition:opacity .15s,transform .15s}
+  .choice input:checked+.choice-face .sw .icon{opacity:1;transform:none}
+  .kv-line{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 0;margin-bottom:22px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:13px}
+  .kv-val{display:inline-flex;align-items:center;gap:7px;color:var(--ink);font-weight:500}
+  .kv-val .icon{width:15px;height:15px;color:var(--teal)}
+  .qty-row{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:18px}
+  .qty-row strong{display:block;font-size:13px;color:var(--ink)}
+  .qty-hint{display:block;margin-top:2px;font-size:12px;color:var(--muted)}
+  .qty{display:inline-flex;align-items:center;border:1px solid #D3D3CA;border-radius:8px;background:#fff}
+  .qty button{display:grid;place-items:center;width:40px;height:40px;border:0;background:none;color:var(--ink);cursor:pointer;border-radius:8px}
+  .qty button:hover{background:var(--tint)}
+  .qty button:focus-visible{outline:2px solid var(--teal);outline-offset:-3px}
+  .qty button:disabled{opacity:.35;cursor:default;background:none}
+  .qty output{min-width:34px;text-align:center;font-size:14px;font-weight:600;color:var(--ink)}
+  .total-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:16px 0;margin-bottom:6px;border-top:1px solid var(--line);font-size:13px}
+  .total-row strong{font:400 1.45rem/1 var(--serif);color:var(--ink)}
+  .form-actions.two{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:stretch}
+  .secondary-button{padding:15px 22px;border:1px solid #CFCFC4;border-radius:6px;background:#fff;color:var(--ink);font:600 14px/1 var(--sans);cursor:pointer}
+  .secondary-button:hover{background:var(--tint)}
+  .secondary-button:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+  .field-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .email-hint{margin-top:8px;padding:9px 11px;border:1px solid var(--rule);border-radius:6px;background:#FFF8E3;font-size:12.5px;color:var(--ink)}
+  .email-hint[hidden]{display:none}
+  .email-hint .text-button{margin-left:6px}
+  .info-note{display:flex;gap:12px;align-items:flex-start;margin:4px 0 24px;padding:14px 16px;background:#F4F3EC;border:1px solid var(--line);font-size:12.5px;line-height:1.6;color:var(--ink);--r:9px}
+  .info-note .icon{width:18px;height:18px;margin-top:2px;color:var(--teal)}
+  .info-note p{margin:0}
+  .rv-section{padding:18px 0;border-top:1px solid var(--line)}
+  .rv-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .rv-head h3{font:600 14px/1.3 var(--sans);color:var(--ink)}
+  .rv-animal{display:flex;gap:14px;align-items:center}
+  .rv-thumb{flex:none;width:64px;height:64px;border-radius:8px;object-fit:cover;background:var(--tint)}
+  .rv-info{display:grid;gap:2px;min-width:0;font-size:13px}
+  .rv-info strong{font-size:15px;color:var(--ink);overflow-wrap:anywhere}
+  .rv-traits{font-style:italic;overflow-wrap:anywhere}
+  .rv-file{font-size:11.5px;color:var(--muted);overflow-wrap:anywhere}
+  .kv{display:grid;grid-template-columns:auto minmax(0,1fr);gap:9px 18px;margin:0;font-size:13px}
+  .kv dt{color:var(--muted)}
+  .kv dd{margin:0;text-align:right;color:var(--ink);font-weight:500;overflow-wrap:anywhere}
+  .rv-label{max-width:280px;margin:18px auto 0}
+  .rv-contact{display:grid;gap:3px;font-size:13px;overflow-wrap:anywhere}
+  .rv-contact strong{color:var(--ink)}
+  .rv-contact em{margin-top:4px}
+  .rv-total{margin:6px 0 18px;padding:16px;background:#F4F3EC;border:1px solid var(--line);--r:9px}
+  .rv-total-row{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;font-weight:600;color:var(--ink)}
+  .rv-total-row strong{font:400 1.35rem/1 var(--serif)}
+  .rv-total p{margin:10px 0 0;font-size:12px;line-height:1.6;color:var(--text)}
+  .check-field{margin-bottom:22px}
+  .check{display:flex;gap:11px;align-items:flex-start;font-size:13px;line-height:1.55;color:var(--ink);cursor:pointer}
+  .check input{flex:none;width:19px;height:19px;margin:1px 0 0;accent-color:var(--green);cursor:pointer}
+  .check input:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+  .order-done{display:grid;justify-items:center;gap:10px;padding:34px 8px 12px;text-align:center}
+  .done-paw{width:56px;height:56px;fill:currentColor;stroke:none;color:var(--gold-d)}
+  .order-done h2{font:400 1.7rem/1.25 var(--serif);color:var(--ink)}
+  .order-done p{max-width:420px;font-size:14px;line-height:1.65;color:var(--text)}
+  .order-done .primary-button{width:auto;min-width:200px;margin-top:10px}
 
   /* EXAMPLES TAB */
   .examples-page{padding-bottom:56px}
@@ -272,6 +353,8 @@
   }
 
   @media (max-width:760px){
+    .choice-face{padding:11px 9px;font-size:12.5px}
+    .field-pair{gap:10px}
     .site-header{padding:16px;flex-wrap:wrap}
     .brand-note{display:none}
     .header-actions{margin-left:auto;flex-wrap:wrap}
@@ -326,6 +409,10 @@
     <symbol id="flag-en" viewBox="0 0 60 40"><clipPath id="flag-en-clip"><rect width="60" height="40"/></clipPath><g clip-path="url(#flag-en-clip)"><rect width="60" height="40" fill="#012169"/><path d="M0 0 60 40M60 0 0 40" stroke="#fff" stroke-width="8"/><path d="M0 0 60 40M60 0 0 40" stroke="#C8102E" stroke-width="3.2"/><path d="M30 0V40M0 20H60" stroke="#fff" stroke-width="13"/><path d="M30 0V40M0 20H60" stroke="#C8102E" stroke-width="7.5"/></g></symbol>
     <symbol id="flag-fr" viewBox="0 0 24 16"><rect width="24" height="16" fill="#fff"/><rect width="8" height="16" fill="#0055A4"/><rect x="16" width="8" height="16" fill="#EF4135"/></symbol>
     <symbol id="flag-es" viewBox="0 0 24 16"><rect width="24" height="16" fill="#AA151B"/><rect y="4" width="24" height="8" fill="#F1BF00"/></symbol>
+    <g id="i-check"><path d="M20 6 9 17l-5-5"/></g>
+    <g id="i-minus"><path d="M5 12h14"/></g>
+    <g id="i-plus"><path d="M5 12h14"/><path d="M12 5v14"/></g>
+    <g id="i-shield"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></g>
   </defs>
 </svg>
 
@@ -443,9 +530,9 @@
           <button type="button" class="sheet-close" id="sheet-close" data-i18n-attr="aria-label:close_aria" aria-label="Fechar o pedido"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-x"/></svg></button>
         </div>
 
-        <p class="panel-note ticket" data-i18n="panel_note">Não precisas de conta nem de pagar nesta fase. Enviamos-te o design por email e só avançamos quando estiveres contente.</p>
+        <p class="panel-note ticket" id="panel-note" data-i18n="panel_note">Não precisas de conta nem de pagar nesta fase. Enviamos-te o design por email e só avançamos quando estiveres contente.</p>
 
-        <nav class="stepper" data-i18n-attr="aria-label:steps_aria" aria-label="Etapas do pedido">
+        <nav class="stepper" id="stepper" data-i18n-attr="aria-label:steps_aria" aria-label="Etapas do pedido">
           <ol>
             <li class="active" id="step-1"><button type="button" aria-current="step"><span class="step-paw"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-paw"/></svg></span><span class="step-name"><b>01</b><span data-i18n="s1">O teu animal</span></span></button></li>
             <li id="step-2"><button type="button" disabled><span class="step-paw"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-paw"/></svg></span><span class="step-name"><b>02</b><span data-i18n="s2">O teu PetJar</span></span></button></li>
@@ -454,12 +541,13 @@
           </ol>
         </nav>
 
-        <div class="step-heading">
-          <h2 id="step-title" tabindex="-1" data-i18n="step_title">Vamos conhecer o teu animal.</h2>
-          <p data-i18n="step_sub">Começa pelo nome e por uma fotografia onde se vejam bem os seus pormenores.</p>
+        <div class="step-heading" id="step-heading">
+          <h2 id="step-title" tabindex="-1">Vamos conhecer o teu animal.</h2>
+          <p id="step-sub">Começa pelo nome e por uma fotografia onde se vejam bem os seus pormenores.</p>
         </div>
 
         <form id="order-form" novalidate>
+          <div class="step-pane" id="pane-1">
           <div class="field">
             <label for="petName"><span data-i18n="name_label">Nome do animal</span> <span class="req">*</span></label>
             <input id="petName" name="petName" type="text" maxlength="24" data-i18n-attr="placeholder:ph_name" placeholder="Por exemplo, Scott" autocomplete="off" required aria-invalid="false" aria-describedby="name-hint name-error">
@@ -492,13 +580,127 @@
             <textarea id="traits" name="traits" maxlength="500" rows="2" data-i18n-attr="placeholder:traits_ph" placeholder="Uma manchinha na testa, orelhas diferentes…"></textarea>
           </div>
 
-          <div class="form-actions">
-            <button type="submit" class="primary-button ticket" data-i18n="continue">Continuar</button>
-            <p class="form-status" id="form-status" role="status" hidden></p>
+            <div class="form-actions">
+              <button type="submit" class="primary-button ticket" data-i18n="continue">Continuar</button>
+            </div>
+          </div>
+
+          <!-- STEP 2: the jar -->
+          <div class="step-pane" id="pane-2" hidden>
+            <div class="mat-box ticket">
+              <span class="mat-label" data-i18n="mat_label">Material do frasco</span>
+              <strong class="mat-name"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="trust3">Vidro com tampa de bambu</span></strong>
+              <p data-i18n="materials">Novos materiais em breve, incluindo cerâmica. A opção disponível agora é vidro.</p>
+            </div>
+            <fieldset class="opt-group">
+              <legend data-i18n="size_label">Tamanho pretendido</legend>
+              <div class="choice-row"><label class="choice"><input type="radio" name="size" value="compact" data-k="size_compact"><span class="choice-face" data-i18n="size_compact">Compacto</span></label><label class="choice"><input type="radio" name="size" value="large" data-k="size_large"><span class="choice-face" data-i18n="size_large">Maior</span></label><label class="choice"><input type="radio" name="size" value="help" data-k="size_help" checked><span class="choice-face" data-i18n="size_help">Ajuda a escolher</span></label></div>
+            </fieldset>
+            <div class="kv-line"><span data-i18n="lid_label">Tampa</span><span class="kv-val"><span data-i18n="lid_bamboo">Bambu</span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span></div>
+            <fieldset class="opt-group">
+              <legend data-i18n="pose_label">Pose da figura</legend>
+              <div class="choice-row"><label class="choice"><input type="radio" name="pose" value="sit" data-k="pose_sit"><span class="choice-face" data-i18n="pose_sit">Sentado</span></label><label class="choice"><input type="radio" name="pose" value="lie" data-k="pose_lie" checked><span class="choice-face" data-i18n="pose_lie">Deitado</span></label><label class="choice"><input type="radio" name="pose" value="rec" data-k="pose_rec"><span class="choice-face" data-i18n="pose_rec">Recomendar</span></label></div>
+            </fieldset>
+            <fieldset class="opt-group">
+              <legend data-i18n="color_label">Cores da etiqueta</legend>
+              <div class="choice-row swatch-row"><label class="choice"><input type="radio" name="color" value="green" data-k="color_green" checked><span class="choice-face"><span class="sw" style="--sw:#244638;--sw-ink:#E2C480"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span data-i18n="color_green">Verde floresta</span></span></label><label class="choice"><input type="radio" name="color" value="gold" data-k="color_gold"><span class="choice-face"><span class="sw" style="--sw:#D8B565;--sw-ink:#244638"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span data-i18n="color_gold">Dourado</span></span></label><label class="choice"><input type="radio" name="color" value="terra" data-k="color_terra"><span class="choice-face"><span class="sw" style="--sw:#9F4B34;--sw-ink:#F4E3C4"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span data-i18n="color_terra">Terracota</span></span></label></div>
+            </fieldset>
+            <div class="qty-row">
+              <div><strong id="qty-label" data-i18n="qty_label">Quantidade</strong><span class="qty-hint" data-i18n="qty_hint">Com a mesma personalização</span></div>
+              <div class="qty" role="group" aria-labelledby="qty-label">
+                <button type="button" id="qty-minus" data-i18n-attr="aria-label:qty_minus" aria-label="Menos um"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-minus"/></svg></button>
+                <output id="qty-out" aria-live="polite">1</output>
+                <button type="button" id="qty-plus" data-i18n-attr="aria-label:qty_plus" aria-label="Mais um"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-plus"/></svg></button>
+              </div>
+            </div>
+            <div class="total-row"><span data-i18n="total_label">Total · Envio incluído</span><strong id="total-out">18,55 €</strong></div>
+            <div class="form-actions two">
+              <button type="button" class="secondary-button" data-back data-i18n="back">Voltar</button>
+              <button type="submit" class="primary-button ticket" data-i18n="continue">Continuar</button>
+            </div>
+          </div>
+
+          <!-- STEP 3: contact -->
+          <div class="step-pane" id="pane-3" hidden>
+            <div class="field">
+              <label for="contactName"><span data-i18n="c_name">O teu nome</span> <span class="req">*</span></label>
+              <input id="contactName" name="contactName" type="text" maxlength="60" autocomplete="name" required aria-invalid="false" aria-describedby="cname-error">
+              <p class="field-error" id="cname-error" hidden></p>
+            </div>
+            <div class="field">
+              <label for="contactEmail"><span data-i18n="c_email">Email</span> <span class="req">*</span></label>
+              <input id="contactEmail" name="contactEmail" type="email" maxlength="120" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" required aria-invalid="false" aria-describedby="email-error email-hint">
+              <p class="field-error" id="email-error" hidden></p>
+              <p class="email-hint" id="email-hint" role="status" hidden><span id="email-hint-text"></span> <button type="button" class="text-button" id="email-fix" data-i18n="email_fix">Corrigir</button></p>
+            </div>
+            <div class="field-pair">
+              <div class="field">
+                <label for="contactPhone"><span data-i18n="c_phone">Telemóvel</span> <span class="optional" data-i18n="optional">Opcional</span></label>
+                <input id="contactPhone" name="contactPhone" type="tel" maxlength="20" inputmode="tel" autocomplete="tel" placeholder="+351" aria-invalid="false" aria-describedby="phone-error">
+                <p class="field-error" id="phone-error" hidden></p>
+              </div>
+              <div class="field">
+                <label for="contactCity"><span data-i18n="c_city">Localidade</span> <span class="optional" data-i18n="optional">Opcional</span></label>
+                <input id="contactCity" name="contactCity" type="text" maxlength="60" autocomplete="address-level2" placeholder="Porto">
+              </div>
+            </div>
+            <div class="field">
+              <label for="contactNotes"><span data-i18n="c_notes">Algo mais que devamos saber?</span> <span class="optional" data-i18n="optional">Opcional</span></label>
+              <textarea id="contactNotes" name="contactNotes" maxlength="500" rows="3" data-i18n-attr="placeholder:c_notes_ph" placeholder="Uma ideia especial, um presente ou alguma dúvida…"></textarea>
+            </div>
+            <div class="info-note ticket"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-shield"/></svg><p id="c-info"></p></div>
+            <div class="form-actions two">
+              <button type="button" class="secondary-button" data-back data-i18n="back">Voltar</button>
+              <button type="submit" class="primary-button ticket" data-i18n="to_review">Rever o meu pedido</button>
+            </div>
+          </div>
+
+          <!-- STEP 4: review -->
+          <div class="step-pane" id="pane-4" hidden>
+            <section class="rv-section" aria-labelledby="rv-h1">
+              <div class="rv-head"><h3 id="rv-h1" data-i18n="s1">O teu animal</h3><button type="button" class="text-button" data-goto="1" data-i18n="edit">Editar</button></div>
+              <div class="rv-animal" id="rv-animal"></div>
+            </section>
+            <section class="rv-section" aria-labelledby="rv-h2">
+              <div class="rv-head"><h3 id="rv-h2" data-i18n="rv_custom">A tua personalização</h3><button type="button" class="text-button" data-goto="2" data-i18n="edit">Editar</button></div>
+              <dl class="kv" id="rv-kv"></dl>
+              <div class="label-preview ticket rv-label">
+                <svg class="pet-label" data-pet-label viewBox="0 0 520 270" role="img" aria-label="Etiqueta de SCOTT: pegada acima do nome, verde floresta" style="--label-background:#244638;--label-ink:#e2c480">
+              <path class="pet-label-paper" d="M42 6 H478 C478 26 494 42 514 42 V228 C494 228 478 244 478 264 H42 C42 244 26 228 6 228 V42 C26 42 42 26 42 6 Z"/>
+              <path class="pet-label-border" d="M48 14 H472 C475 33 487 45 506 48 V222 C487 225 475 237 472 256 H48 C45 237 33 225 14 222 V48 C33 45 45 33 48 14 Z"/>
+              <path class="pet-label-inner-border" d="M55 22 H465 C470 40 480 50 498 55 V215 C480 220 470 230 465 248 H55 C50 230 40 220 22 215 V55 C40 50 50 40 55 22 Z"/>
+              <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="pet-label-paw" x="238" y="55" aria-hidden="true"><use href="#i-paw"/></svg>
+              <text x="260" y="178" text-anchor="middle" font-size="64">SCOTT</text>
+            </svg>
+              </div>
+            </section>
+            <section class="rv-section" aria-labelledby="rv-h3">
+              <div class="rv-head"><h3 id="rv-h3" data-i18n="s3">Contacto</h3><button type="button" class="text-button" data-goto="3" data-i18n="edit">Editar</button></div>
+              <div class="rv-contact" id="rv-contact"></div>
+            </section>
+            <div class="rv-total ticket">
+              <div class="rv-total-row"><span data-i18n="rv_total">Total</span><strong id="rv-total-out"></strong></div>
+              <p id="rv-total-note"></p>
+            </div>
+            <div class="field check-field">
+              <label class="check"><input type="checkbox" id="consent" name="consent" aria-invalid="false" aria-describedby="consent-error"><span data-i18n="consent">Autorizo a utilização desta fotografia e dos meus dados de contacto para preparar e responder a este pedido.</span></label>
+              <p class="field-error" id="consent-error" hidden></p>
+            </div>
+            <div class="form-actions two">
+              <button type="button" class="secondary-button" data-back data-i18n="back">Voltar</button>
+              <button type="submit" class="primary-button ticket" data-i18n="send">Enviar pedido</button>
+            </div>
           </div>
         </form>
 
-        <div class="panel-footnote">
+        <div class="order-done" id="order-done" hidden>
+          <svg class="icon done-paw" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-paw"/></svg>
+          <h2 id="done-title" tabindex="-1" data-i18n="done_title">Pedido pronto, em modo conceito.</h2>
+          <p id="done-text"></p>
+          <button type="button" class="primary-button ticket" id="restart" data-i18n="restart">Começar de novo</button>
+        </div>
+
+        <div class="panel-footnote" id="panel-footnote">
           <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-lock"/></svg>
           <span data-i18n="foot_note">Sem pagamento nesta fase. Apenas um pedido à tua medida.</span>
         </div>
@@ -683,7 +885,6 @@
   "err_photo_none": "Escolhe uma fotografia do teu animal.",
   "err_photo_type": "Usa uma imagem JPG, PNG ou WebP.",
   "err_photo_big": "A fotografia tem mais de 8 MB. Escolhe uma mais pequena.",
-  "status_ok": "Tudo certo neste passo. Pré-visualização: os passos 2 a 4 não fazem parte deste conceito e nada foi enviado.",
   "ex_eyebrow": "CADA ANIMAL, UM PETJAR",
   "ex_title": "Pequenos pormenores. Muito carácter.",
   "ex_text": "Fotografias dos nossos PetJars na Vinted: vidro, tampa de bambu e uma figura cheia de personalidade. Aqui encontras também a opinião de uma compra real.",
@@ -716,7 +917,65 @@
   "foot_aria": "Redes sociais e loja",
   "ig_aria": "PetJar no Instagram (abre numa nova janela)",
   "vt_aria": "Loja do PetJar na Vinted (abre numa nova janela)",
-  "label_aria": "Etiqueta de {n}: pegada acima do nome, verde floresta"
+  "label_aria": "Etiqueta de {n}: pegada acima do nome, {c}",
+  "mat_label": "Material do frasco",
+  "size_label": "Tamanho pretendido",
+  "size_compact": "Compacto",
+  "size_large": "Maior",
+  "size_help": "Ajuda a escolher",
+  "lid_label": "Tampa",
+  "lid_bamboo": "Bambu",
+  "pose_label": "Pose da figura",
+  "pose_sit": "Sentado",
+  "pose_lie": "Deitado",
+  "pose_rec": "Recomendar",
+  "color_label": "Cores da etiqueta",
+  "color_green": "Verde floresta",
+  "color_gold": "Dourado",
+  "color_terra": "Terracota",
+  "qty_label": "Quantidade",
+  "qty_hint": "Com a mesma personalização",
+  "qty_minus": "Menos um",
+  "qty_plus": "Mais um",
+  "qty_one": "1 frasco",
+  "qty_many": "{n} frascos",
+  "total_label": "Total · Envio incluído",
+  "back": "Voltar",
+  "st2_title": "Dá-lhe o teu toque.",
+  "st2_sub": "Escolhe as tuas preferências para o frasco de vidro. Confirmaremos o tamanho e o design final contigo.",
+  "st3_title": "Como podemos falar contigo?",
+  "st3_sub": "Usaremos estes dados apenas para tratar do teu pedido.",
+  "st4_title": "Tudo pronto para rever.",
+  "st4_sub": "Confirma a fotografia, o nome e as tuas escolhas antes de enviar.",
+  "c_name": "O teu nome",
+  "c_email": "Email",
+  "c_phone": "Telemóvel",
+  "c_city": "Localidade",
+  "c_notes": "Algo mais que devamos saber?",
+  "c_notes_ph": "Uma ideia especial, um presente ou alguma dúvida…",
+  "c_info": "Este é um pedido de personalização. O PetJar de vidro custa {p} por unidade, com envio incluído. Confirmaremos a disponibilidade e o design final antes da produção.",
+  "to_review": "Rever o meu pedido",
+  "err_cname": "Escreve o teu nome (apenas letras).",
+  "err_email_req": "Escreve o teu email.",
+  "err_email_bad": "Este email não parece válido. Confirma se está bem escrito.",
+  "email_suggest": "Querias dizer {e}?",
+  "email_fix": "Corrigir",
+  "err_phone": "Confirma o número de telemóvel.",
+  "rv_custom": "A tua personalização",
+  "edit": "Editar",
+  "rv_no_breed": "Raça / tipo não indicado",
+  "rv_bottle": "Frasco",
+  "rv_glass": "Vidro",
+  "rv_figure": "Figura",
+  "rv_label": "Etiqueta",
+  "rv_total": "Total",
+  "rv_price_note": "Preço por unidade: {p} · {q}. Envio incluído. Este formulário envia um pedido; não cobra qualquer pagamento. A produção avança após a confirmação do design e das condições contigo.",
+  "consent": "Autorizo a utilização desta fotografia e dos meus dados de contacto para preparar e responder a este pedido.",
+  "err_consent": "Para enviar, tens de autorizar a utilização dos dados.",
+  "send": "Enviar pedido",
+  "done_title": "Pedido pronto, em modo conceito.",
+  "done_text": "Obrigado, {n}! Isto é só um conceito e nada foi enviado. No site real, receberias um email de confirmação em {e}.",
+  "restart": "Começar de novo"
  },
  "en": {
   "title": "PetJar · Your pet, in a one-of-a-kind jar",
@@ -778,7 +1037,6 @@
   "err_photo_none": "Choose a photo of your pet.",
   "err_photo_type": "Please use a JPG, PNG or WebP image.",
   "err_photo_big": "The photo is over 8 MB. Please choose a smaller one.",
-  "status_ok": "All good for this step. Preview only: steps 2 to 4 aren't part of this concept and nothing was sent.",
   "ex_eyebrow": "EVERY PET, ITS OWN PETJAR",
   "ex_title": "Little details. Plenty of character.",
   "ex_text": "Photos of our PetJars on Vinted: glass, a bamboo lid and a figurine full of personality. Here you'll also find a review from a real purchase.",
@@ -811,7 +1069,65 @@
   "foot_aria": "Social media and shop",
   "ig_aria": "PetJar on Instagram (opens in a new window)",
   "vt_aria": "PetJar shop on Vinted (opens in a new window)",
-  "label_aria": "Label for {n}: paw print above the name, forest green"
+  "label_aria": "Label for {n}: paw print above the name, {c}",
+  "mat_label": "Jar material",
+  "size_label": "Preferred size",
+  "size_compact": "Compact",
+  "size_large": "Larger",
+  "size_help": "Help me choose",
+  "lid_label": "Lid",
+  "lid_bamboo": "Bamboo",
+  "pose_label": "Figurine pose",
+  "pose_sit": "Sitting",
+  "pose_lie": "Lying down",
+  "pose_rec": "Recommend one",
+  "color_label": "Label colour",
+  "color_green": "Forest green",
+  "color_gold": "Gold",
+  "color_terra": "Terracotta",
+  "qty_label": "Quantity",
+  "qty_hint": "With the same personalisation",
+  "qty_minus": "One fewer",
+  "qty_plus": "One more",
+  "qty_one": "1 jar",
+  "qty_many": "{n} jars",
+  "total_label": "Total · Shipping included",
+  "back": "Back",
+  "st2_title": "Give it your touch.",
+  "st2_sub": "Choose your preferences for the glass jar. We'll confirm the size and final design with you.",
+  "st3_title": "How can we reach you?",
+  "st3_sub": "We'll only use these details to handle your order.",
+  "st4_title": "Everything's ready to review.",
+  "st4_sub": "Check the photo, the name and your choices before sending.",
+  "c_name": "Your name",
+  "c_email": "Email",
+  "c_phone": "Mobile number",
+  "c_city": "Town or city",
+  "c_notes": "Anything else we should know?",
+  "c_notes_ph": "A special idea, a gift or a question…",
+  "c_info": "This is a personalisation request. The glass PetJar costs {p} each, shipping included. We'll confirm availability and the final design before production.",
+  "to_review": "Review my order",
+  "err_cname": "Please enter your name (letters only).",
+  "err_email_req": "Please enter your email.",
+  "err_email_bad": "This email doesn't look valid. Please check the spelling.",
+  "email_suggest": "Did you mean {e}?",
+  "email_fix": "Fix it",
+  "err_phone": "Please check the mobile number.",
+  "rv_custom": "Your personalisation",
+  "edit": "Edit",
+  "rv_no_breed": "Breed / type not given",
+  "rv_bottle": "Jar",
+  "rv_glass": "Glass",
+  "rv_figure": "Figurine",
+  "rv_label": "Label",
+  "rv_total": "Total",
+  "rv_price_note": "Unit price: {p} · {q}. Shipping included. This form sends a request and doesn't charge anything. Production starts once we've confirmed the design and terms with you.",
+  "consent": "I allow the use of this photo and my contact details to prepare and reply to this order.",
+  "err_consent": "To send, you need to allow the use of your data.",
+  "send": "Send order",
+  "done_title": "Order ready, in concept mode.",
+  "done_text": "Thank you, {n}! This is only a concept and nothing was sent. On the real site, you'd get a confirmation email at {e}.",
+  "restart": "Start again"
  },
  "fr": {
   "title": "PetJar · Votre animal, dans un bocal unique",
@@ -873,7 +1189,6 @@
   "err_photo_none": "Choisissez une photo de votre animal.",
   "err_photo_type": "Utilisez une image JPG, PNG ou WebP.",
   "err_photo_big": "La photo dépasse 8 Mo. Choisissez-en une plus légère.",
-  "status_ok": "Tout est bon pour cette étape. Aperçu : les étapes 2 à 4 ne font pas partie de ce concept et rien n'a été envoyé.",
   "ex_eyebrow": "CHAQUE ANIMAL, SON PETJAR",
   "ex_title": "De petits détails. Beaucoup de caractère.",
   "ex_text": "Photos de nos PetJars sur Vinted : verre, couvercle en bambou et une figurine pleine de personnalité. Vous trouverez aussi ici l'avis d'un achat réel.",
@@ -906,7 +1221,65 @@
   "foot_aria": "Réseaux sociaux et boutique",
   "ig_aria": "PetJar sur Instagram (s'ouvre dans une nouvelle fenêtre)",
   "vt_aria": "Boutique PetJar sur Vinted (s'ouvre dans une nouvelle fenêtre)",
-  "label_aria": "Étiquette de {n} : empreinte de patte au-dessus du nom, vert forêt"
+  "label_aria": "Étiquette de {n} : empreinte de patte au-dessus du nom, {c}",
+  "mat_label": "Matériau du bocal",
+  "size_label": "Taille souhaitée",
+  "size_compact": "Compact",
+  "size_large": "Plus grand",
+  "size_help": "Aidez-moi à choisir",
+  "lid_label": "Couvercle",
+  "lid_bamboo": "Bambou",
+  "pose_label": "Pose de la figurine",
+  "pose_sit": "Assis",
+  "pose_lie": "Couché",
+  "pose_rec": "Conseillez-moi",
+  "color_label": "Couleur de l'étiquette",
+  "color_green": "Vert forêt",
+  "color_gold": "Doré",
+  "color_terra": "Terracotta",
+  "qty_label": "Quantité",
+  "qty_hint": "Avec la même personnalisation",
+  "qty_minus": "Un de moins",
+  "qty_plus": "Un de plus",
+  "qty_one": "1 bocal",
+  "qty_many": "{n} bocaux",
+  "total_label": "Total · Livraison incluse",
+  "back": "Retour",
+  "st2_title": "Donnez-lui votre touche.",
+  "st2_sub": "Choisissez vos préférences pour le bocal en verre. Nous confirmerons la taille et le design final avec vous.",
+  "st3_title": "Comment pouvons-nous vous joindre ?",
+  "st3_sub": "Nous n'utiliserons ces informations que pour traiter votre demande.",
+  "st4_title": "Tout est prêt pour la relecture.",
+  "st4_sub": "Vérifiez la photo, le nom et vos choix avant d'envoyer.",
+  "c_name": "Votre nom",
+  "c_email": "E-mail",
+  "c_phone": "Téléphone mobile",
+  "c_city": "Ville",
+  "c_notes": "Autre chose à nous dire ?",
+  "c_notes_ph": "Une idée particulière, un cadeau ou une question…",
+  "c_info": "Il s'agit d'une demande de personnalisation. Le PetJar en verre coûte {p} l'unité, livraison incluse. Nous confirmerons la disponibilité et le design final avant la production.",
+  "to_review": "Vérifier ma commande",
+  "err_cname": "Saisissez votre nom (lettres uniquement).",
+  "err_email_req": "Saisissez votre adresse e-mail.",
+  "err_email_bad": "Cette adresse e-mail semble invalide. Vérifiez qu'elle est bien écrite.",
+  "email_suggest": "Vouliez-vous dire {e} ?",
+  "email_fix": "Corriger",
+  "err_phone": "Vérifiez le numéro de téléphone.",
+  "rv_custom": "Votre personnalisation",
+  "edit": "Modifier",
+  "rv_no_breed": "Race / type non indiqué",
+  "rv_bottle": "Bocal",
+  "rv_glass": "Verre",
+  "rv_figure": "Figurine",
+  "rv_label": "Étiquette",
+  "rv_total": "Total",
+  "rv_price_note": "Prix unitaire : {p} · {q}. Livraison incluse. Ce formulaire envoie une demande et ne prélève aucun paiement. La production démarre après confirmation du design et des conditions avec vous.",
+  "consent": "J'autorise l'utilisation de cette photo et de mes coordonnées pour préparer cette commande et y répondre.",
+  "err_consent": "Pour envoyer, vous devez autoriser l'utilisation des données.",
+  "send": "Envoyer la demande",
+  "done_title": "Demande prête, en mode concept.",
+  "done_text": "Merci, {n} ! Ceci n'est qu'un concept et rien n'a été envoyé. Sur le vrai site, vous recevriez un e-mail de confirmation à l'adresse {e}.",
+  "restart": "Recommencer"
  },
  "es": {
   "title": "PetJar · Tu mascota, en un tarro único",
@@ -968,7 +1341,6 @@
   "err_photo_none": "Elige una foto de tu mascota.",
   "err_photo_type": "Usa una imagen JPG, PNG o WebP.",
   "err_photo_big": "La foto pesa más de 8 MB. Elige una más pequeña.",
-  "status_ok": "Todo en orden en este paso. Vista previa: los pasos 2 a 4 no forman parte de este concepto y no se ha enviado nada.",
   "ex_eyebrow": "CADA MASCOTA, SU PETJAR",
   "ex_title": "Pequeños detalles. Mucho carácter.",
   "ex_text": "Fotos de nuestros PetJars en Vinted: cristal, tapa de bambú y una figurita llena de personalidad. Aquí también encontrarás la opinión de una compra real.",
@@ -1001,7 +1373,65 @@
   "foot_aria": "Redes sociales y tienda",
   "ig_aria": "PetJar en Instagram (se abre en una ventana nueva)",
   "vt_aria": "Tienda de PetJar en Vinted (se abre en una ventana nueva)",
-  "label_aria": "Etiqueta de {n}: huella encima del nombre, verde bosque"
+  "label_aria": "Etiqueta de {n}: huella encima del nombre, {c}",
+  "mat_label": "Material del tarro",
+  "size_label": "Tamaño preferido",
+  "size_compact": "Compacto",
+  "size_large": "Más grande",
+  "size_help": "Ayúdame a elegir",
+  "lid_label": "Tapa",
+  "lid_bamboo": "Bambú",
+  "pose_label": "Postura de la figurita",
+  "pose_sit": "Sentado",
+  "pose_lie": "Tumbado",
+  "pose_rec": "Recomiéndame",
+  "color_label": "Color de la etiqueta",
+  "color_green": "Verde bosque",
+  "color_gold": "Dorado",
+  "color_terra": "Terracota",
+  "qty_label": "Cantidad",
+  "qty_hint": "Con la misma personalización",
+  "qty_minus": "Uno menos",
+  "qty_plus": "Uno más",
+  "qty_one": "1 tarro",
+  "qty_many": "{n} tarros",
+  "total_label": "Total · Envío incluido",
+  "back": "Atrás",
+  "st2_title": "Dale tu toque.",
+  "st2_sub": "Elige tus preferencias para el tarro de cristal. Confirmaremos el tamaño y el diseño final contigo.",
+  "st3_title": "¿Cómo podemos hablar contigo?",
+  "st3_sub": "Usaremos estos datos solo para tramitar tu pedido.",
+  "st4_title": "Todo listo para revisar.",
+  "st4_sub": "Comprueba la foto, el nombre y tus elecciones antes de enviar.",
+  "c_name": "Tu nombre",
+  "c_email": "Email",
+  "c_phone": "Móvil",
+  "c_city": "Localidad",
+  "c_notes": "¿Algo más que debamos saber?",
+  "c_notes_ph": "Una idea especial, un regalo o alguna duda…",
+  "c_info": "Este es un pedido de personalización. El PetJar de cristal cuesta {p} por unidad, con envío incluido. Confirmaremos la disponibilidad y el diseño final antes de la producción.",
+  "to_review": "Revisar mi pedido",
+  "err_cname": "Escribe tu nombre (solo letras).",
+  "err_email_req": "Escribe tu email.",
+  "err_email_bad": "Este email no parece válido. Comprueba que esté bien escrito.",
+  "email_suggest": "¿Querías decir {e}?",
+  "email_fix": "Corregir",
+  "err_phone": "Comprueba el número de móvil.",
+  "rv_custom": "Tu personalización",
+  "edit": "Editar",
+  "rv_no_breed": "Raza / tipo no indicado",
+  "rv_bottle": "Tarro",
+  "rv_glass": "Cristal",
+  "rv_figure": "Figurita",
+  "rv_label": "Etiqueta",
+  "rv_total": "Total",
+  "rv_price_note": "Precio por unidad: {p} · {q}. Envío incluido. Este formulario envía una solicitud y no cobra ningún pago. La producción comienza tras confirmar contigo el diseño y las condiciones.",
+  "consent": "Autorizo el uso de esta foto y de mis datos de contacto para preparar este pedido y responder a él.",
+  "err_consent": "Para enviar, tienes que autorizar el uso de los datos.",
+  "send": "Enviar pedido",
+  "done_title": "Pedido listo, en modo concepto.",
+  "done_text": "¡Gracias, {n}! Esto es solo un concepto y no se ha enviado nada. En el sitio real, recibirías un email de confirmación en {e}.",
+  "restart": "Empezar de nuevo"
  }
 };
   var LANGS = {
@@ -1087,6 +1517,15 @@
   var labels = Array.prototype.slice.call(document.querySelectorAll('[data-pet-label]'));
   var stampEls = Array.prototype.slice.call(document.querySelectorAll('[data-stamp]'));
   var MAX_W = 340;
+  var COLORS = {
+    green: { bg: '#244638', ink: '#e2c480' },
+    gold:  { bg: '#d8b565', ink: '#244638' },
+    terra: { bg: '#9f4b34', ink: '#f4e3c4' }
+  };
+  function colorKey() {
+    var r = document.querySelector('input[name="color"]:checked');
+    return r ? r.value : 'green';
+  }
 
   function fit(textEl, name) {
     textEl.textContent = name;
@@ -1108,9 +1547,12 @@
   function updateLabels() {
     var name = (nameInput.value.trim() || 'Scott').toUpperCase();
     counter.textContent = nameInput.value.length + '/24';
+    var ck = colorKey();
     labels.forEach(function (svg) {
+      svg.style.setProperty('--label-background', COLORS[ck].bg);
+      svg.style.setProperty('--label-ink', COLORS[ck].ink);
       fit(svg.querySelector('text'), name);
-      svg.setAttribute('aria-label', t('label_aria', { n: name }));
+      svg.setAttribute('aria-label', t('label_aria', { n: name, c: t('color_' + ck).toLowerCase() }));
     });
   }
   function stamp() {
@@ -1156,39 +1598,299 @@
     renderUpload();
   });
 
-  // ---- Form checks ----
+  // ---- Order steps ----
   var form = document.getElementById('order-form');
-  var status = document.getElementById('form-status');
-  var errKeys = { name: '', photo: '' };
+  var stepTitle = document.getElementById('step-title');
+  var stepSub = document.getElementById('step-sub');
+  var stepHeading = document.getElementById('step-heading');
+  var stepperNav = document.getElementById('stepper');
+  var stepCount = document.querySelector('.step-count');
+  var panelNote = document.getElementById('panel-note');
+  var footnote = document.getElementById('panel-footnote');
+  var doneBox = document.getElementById('order-done');
+  var contactName = document.getElementById('contactName');
+  var contactEmail = document.getElementById('contactEmail');
+  var contactPhone = document.getElementById('contactPhone');
+  var contactCity = document.getElementById('contactCity');
+  var contactNotes = document.getElementById('contactNotes');
+  var consent = document.getElementById('consent');
+  var UNIT = 18.55;
+  var step = 1, maxStep = 1, qtyVal = 1, finished = false;
+  var completed = {};
+
+  var FIELD = { name: nameInput, photo: photo, cname: contactName, email: contactEmail, phone: contactPhone, consent: consent };
+  var errKeys = { name: '', photo: '', cname: '', email: '', phone: '', consent: '' };
   function renderErr(id) {
-    var input = document.getElementById(id === 'name' ? 'petName' : 'photo');
     var el = document.getElementById(id + '-error');
     var key = errKeys[id];
     el.textContent = key ? t(key) : '';
     el.hidden = !key;
-    input.setAttribute('aria-invalid', key ? 'true' : 'false');
+    FIELD[id].setAttribute('aria-invalid', key ? 'true' : 'false');
   }
+  function renderAllErr() { for (var k in errKeys) { renderErr(k); } }
   function setError(id, key) { errKeys[id] = key || ''; renderErr(id); }
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
+
+  function fmtPrice(n) {
+    try { return new Intl.NumberFormat(LANGS[current].locale, { style: 'currency', currency: 'EUR' }).format(n); }
+    catch (e) { return n.toFixed(2) + ' €'; }
+  }
+  function qtyText() { return qtyVal === 1 ? t('qty_one') : t('qty_many', { n: qtyVal }); }
+  function choiceText(name) {
+    var r = document.querySelector('input[name="' + name + '"]:checked');
+    return r ? t(r.getAttribute('data-k')) : '';
+  }
+  function mk(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  // Email: strict format check, plus a gentle "did you mean" for common typos
+  var KNOWN = ['gmail.com', 'hotmail.com', 'hotmail.pt', 'outlook.com', 'outlook.pt', 'yahoo.com', 'yahoo.pt', 'icloud.com', 'live.com', 'live.com.pt', 'sapo.pt', 'msn.com', 'me.com', 'aol.com', 'gmx.com', 'protonmail.com', 'proton.me', 'netcabo.pt', 'iol.pt', 'clix.pt', 'telepac.pt'];
+  var TLD_FIX = { con: 'com', cmo: 'com', ocm: 'com', vom: 'com', xom: 'com', cim: 'com', comm: 'com', coom: 'com', copm: 'com' };
+  function dist(a, b) {
+    var d = [], i, j;
+    for (i = 0; i <= a.length; i++) { d[i] = [i]; }
+    for (j = 1; j <= b.length; j++) { d[0][j] = j; }
+    for (i = 1; i <= a.length; i++) {
+      for (j = 1; j <= b.length; j++) {
+        var c = a[i - 1] === b[j - 1] ? 0 : 1;
+        d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + c);
+        if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) { d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1); }
+      }
+    }
+    return d[a.length][b.length];
+  }
+  function suggest(local, domain) {
+    if (KNOWN.indexOf(domain) !== -1) return null;
+    var parts = domain.split('.');
+    var last = parts[parts.length - 1];
+    if (TLD_FIX[last]) {
+      parts[parts.length - 1] = TLD_FIX[last];
+      return local + '@' + parts.join('.');
+    }
+    var best = null, bestD = 99;
+    KNOWN.forEach(function (k) {
+      var dd = dist(domain, k);
+      if (dd < bestD) { bestD = dd; best = k; }
+    });
+    if (best && domain.length >= 5 && (bestD === 1 || (bestD === 2 && domain.length >= 9))) return local + '@' + best;
+    return null;
+  }
+  function emailCheck(raw) {
+    var v = raw.trim();
+    var m = /^([^\s@]{1,64})@([^\s@]{3,255})$/.exec(v);
+    if (!m) return { ok: false };
+    var local = m[1], domain = m[2].toLowerCase();
+    if (!/^[A-Za-z0-9.!#$%&'*+\/=?^_`{|}~-]+$/.test(local) || /^\.|\.$|\.\./.test(local)) return { ok: false };
+    var labelsArr = domain.split('.');
+    if (labelsArr.length < 2) return { ok: false };
+    for (var i = 0; i < labelsArr.length; i++) {
+      if (!/^[a-z0-9¡-￿]([a-z0-9¡-￿-]{0,61}[a-z0-9¡-￿])?$/.test(labelsArr[i])) return { ok: false };
+    }
+    if (!/^[a-z¡-￿]{2,24}$/.test(labelsArr[labelsArr.length - 1])) return { ok: false };
+    return { ok: true, suggestion: suggest(local, domain) };
+  }
+  var hint = document.getElementById('email-hint');
+  var hintText = document.getElementById('email-hint-text');
+  var emailSug = null, emailAck = false;
+  function showHint(sug) {
+    emailSug = sug;
+    hint.hidden = !sug;
+    if (sug) hintText.textContent = t('email_suggest', { e: sug });
+  }
+  contactEmail.addEventListener('input', function () {
+    emailAck = false;
+    showHint(null);
+    if (errKeys.email && emailCheck(contactEmail.value).ok) setError('email', '');
+  });
+  // No check on blur: a message that appears while the user taps "Continue" moves the button and the tap is lost.
+  // The email is checked when the step is submitted instead.
+  document.getElementById('email-fix').addEventListener('click', function () {
+    if (emailSug) { contactEmail.value = emailSug; }
+    showHint(null); emailAck = false; setError('email', '');
+    contactEmail.focus();
+  });
+
+  // Quantity
+  function renderQty() {
+    document.getElementById('qty-out').textContent = qtyVal;
+    document.getElementById('qty-minus').disabled = qtyVal <= 1;
+    document.getElementById('qty-plus').disabled = qtyVal >= 10;
+    document.getElementById('total-out').textContent = fmtPrice(UNIT * qtyVal);
+  }
+  document.getElementById('qty-minus').addEventListener('click', function () { if (qtyVal > 1) { qtyVal--; renderQty(); } });
+  document.getElementById('qty-plus').addEventListener('click', function () { if (qtyVal < 10) { qtyVal++; renderQty(); } });
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="color"]'), function (r) {
+    r.addEventListener('change', function () { updateLabels(); stamp(); });
+  });
+
+  // Texts that depend on the step or the language
+  function renderStep() {
+    var n = step;
+    stepTitle.textContent = t(n === 1 ? 'step_title' : 'st' + n + '_title');
+    stepSub.textContent = t(n === 1 ? 'step_sub' : 'st' + n + '_sub');
+    stepCount.textContent = n + ' / 4';
+    document.getElementById('c-info').textContent = t('c_info', { p: fmtPrice(UNIT) });
+    if (emailSug && !hint.hidden) hintText.textContent = t('email_suggest', { e: emailSug });
+    renderQty();
+    if (n === 4) renderSummary();
+    renderDone();
+  }
+  function renderSummary() {
+    var a = document.getElementById('rv-animal');
+    a.textContent = '';
+    var f = photo.files && photo.files[0];
+    if (thumbURL) { URL.revokeObjectURL(thumbURL); thumbURL = null; }
+    if (f) {
+      thumbURL = URL.createObjectURL(f);
+      var img = mk('img', 'rv-thumb');
+      img.src = thumbURL; img.alt = t('photo_label');
+      a.appendChild(img);
+    }
+    var info = mk('div', 'rv-info');
+    info.appendChild(mk('strong', '', nameInput.value.trim()));
+    info.appendChild(mk('span', '', document.getElementById('breed').value.trim() || t('rv_no_breed')));
+    var tr = document.getElementById('traits').value.trim();
+    if (tr) info.appendChild(mk('span', 'rv-traits', tr));
+    if (f) info.appendChild(mk('span', 'rv-file', f.name));
+    a.appendChild(info);
+
+    var kv = document.getElementById('rv-kv');
+    kv.textContent = '';
+    [
+      [t('rv_bottle'), t('rv_glass') + ' · ' + choiceText('size')],
+      [t('lid_label'), t('lid_bamboo')],
+      [t('rv_figure'), choiceText('pose')],
+      [t('rv_label'), t('color_' + colorKey())],
+      [t('detail2'), (nameInput.value.trim() || 'Scott').toUpperCase()],
+      [t('qty_label'), qtyText()]
+    ].forEach(function (row) { kv.appendChild(mk('dt', '', row[0])); kv.appendChild(mk('dd', '', row[1])); });
+
+    var c = document.getElementById('rv-contact');
+    c.textContent = '';
+    c.appendChild(mk('strong', '', contactName.value.trim()));
+    c.appendChild(mk('span', '', contactEmail.value.trim()));
+    if (contactPhone.value.trim()) c.appendChild(mk('span', '', contactPhone.value.trim()));
+    if (contactCity.value.trim()) c.appendChild(mk('span', '', contactCity.value.trim()));
+    if (contactNotes.value.trim()) c.appendChild(mk('em', '', contactNotes.value.trim()));
+
+    document.getElementById('rv-total-out').textContent = fmtPrice(UNIT * qtyVal);
+    document.getElementById('rv-total-note').textContent = t('rv_price_note', { p: fmtPrice(UNIT), q: qtyText() });
+  }
+  function renderDone() {
+    if (doneBox.hidden) return;
+    document.getElementById('done-text').textContent = t('done_text', { n: contactName.value.trim(), e: contactEmail.value.trim() });
+  }
+  var thumbURL = null;
+
+  var panes = [null, document.getElementById('pane-1'), document.getElementById('pane-2'), document.getElementById('pane-3'), document.getElementById('pane-4')];
+  function goStep(n, userMove) {
+    step = n;
+    if (n > maxStep) maxStep = n;
+    for (var i = 1; i <= 4; i++) {
+      panes[i].hidden = (i !== n);
+      var li = document.getElementById('step-' + i);
+      var btn = li.querySelector('button');
+      li.classList.toggle('active', i === n);
+      li.classList.toggle('done', !!completed[i] && i !== n);
+      li.classList.toggle('reached', i <= maxStep);
+      btn.disabled = i > maxStep;
+      if (i === n) btn.setAttribute('aria-current', 'step'); else btn.removeAttribute('aria-current');
+    }
+    panelNote.hidden = (n !== 1);
+    renderStep();
+    if (userMove) {
+      if (mq.matches) { panel.scrollTop = 0; }
+      else { panel.scrollIntoView({ behavior: rm ? 'auto' : 'smooth', block: 'start' }); }
+      stepTitle.focus({ preventScroll: true });
+    }
+  }
+  Array.prototype.forEach.call(stepperNav.querySelectorAll('button'), function (btn, idx) {
+    btn.addEventListener('click', function () { if (!btn.disabled && !finished && idx + 1 !== step) goStep(idx + 1, true); });
+  });
+  Array.prototype.forEach.call(form.querySelectorAll('[data-back]'), function (b) {
+    b.addEventListener('click', function () { goStep(step - 1, true); });
+  });
+  Array.prototype.forEach.call(form.querySelectorAll('[data-goto]'), function (b) {
+    b.addEventListener('click', function () { goStep(Number(b.getAttribute('data-goto')), true); });
+  });
+
+  function validate1() {
     var firstBad = null;
     var okTypes = ['image/jpeg', 'image/png', 'image/webp'];
     var file = photo.files && photo.files[0];
-
     if (!nameInput.value.trim()) { setError('name', 'err_name'); firstBad = firstBad || nameInput; } else { setError('name', ''); }
-
     if (!file) { setError('photo', 'err_photo_none'); firstBad = firstBad || photo; }
     else if (okTypes.indexOf(file.type) === -1) { setError('photo', 'err_photo_type'); firstBad = firstBad || photo; }
     else if (file.size > 8 * 1024 * 1024) { setError('photo', 'err_photo_big'); firstBad = firstBad || photo; }
     else { setError('photo', ''); }
+    if (firstBad) { firstBad.focus(); return false; }
+    return true;
+  }
+  function validate3() {
+    var firstBad = null;
+    var nm = contactName.value.trim();
+    var nameOk = false;
+    try { nameOk = /^\p{L}[\p{L}\p{M} '’.-]{1,59}$/u.test(nm); } catch (e) { nameOk = nm.length >= 2 && !/\d/.test(nm); }
+    if (!nameOk) { setError('cname', 'err_cname'); firstBad = firstBad || contactName; } else { setError('cname', ''); }
 
-    if (firstBad) { status.hidden = true; firstBad.focus(); return; }
-    // Step 1 done: its paw turns gold and the path to step 2 fills in
-    document.getElementById('step-1').classList.add('done');
-    document.getElementById('step-2').classList.add('reached');
-    status.hidden = false;
-    status.textContent = t('status_ok');
+    var em = contactEmail.value.trim();
+    var r = emailCheck(em);
+    if (!em) { setError('email', 'err_email_req'); firstBad = firstBad || contactEmail; showHint(null); }
+    else if (!r.ok) { setError('email', 'err_email_bad'); firstBad = firstBad || contactEmail; showHint(null); }
+    else {
+      setError('email', '');
+      if (r.suggestion && !emailAck) { showHint(r.suggestion); emailAck = true; firstBad = firstBad || contactEmail; }
+    }
+
+    var ph = contactPhone.value.trim();
+    if (ph && !(/^\+?[0-9 ()-]{7,20}$/.test(ph) && ph.replace(/\D/g, '').length >= 7)) { setError('phone', 'err_phone'); firstBad = firstBad || contactPhone; } else { setError('phone', ''); }
+
+    if (firstBad) { firstBad.focus(); return false; }
+    return true;
+  }
+  function validate4() {
+    if (!consent.checked) { setError('consent', 'err_consent'); consent.focus(); return false; }
+    setError('consent', '');
+    return true;
+  }
+  consent.addEventListener('change', function () { if (consent.checked) setError('consent', ''); });
+  contactName.addEventListener('input', function () { if (errKeys.cname) setError('cname', ''); });
+  contactPhone.addEventListener('input', function () { if (errKeys.phone) setError('phone', ''); });
+
+  function showDone() {
+    finished = true;
+    form.hidden = true; stepperNav.hidden = true; stepHeading.hidden = true;
+    panelNote.hidden = true; footnote.hidden = true;
+    stepCount.textContent = '4 / 4';
+    doneBox.hidden = false;
+    renderDone();
+    if (mq.matches) { panel.scrollTop = 0; } else { panel.scrollIntoView({ behavior: rm ? 'auto' : 'smooth', block: 'start' }); }
+    document.getElementById('done-title').focus({ preventScroll: true });
+  }
+  document.getElementById('restart').addEventListener('click', function () {
+    form.reset();
+    if (thumbURL) { URL.revokeObjectURL(thumbURL); thumbURL = null; }
+    heroInput.value = '';
+    for (var k in errKeys) { errKeys[k] = ''; }
+    qtyVal = 1; step = 1; maxStep = 1; completed = {}; finished = false; emailAck = false;
+    showHint(null);
+    form.hidden = false; stepperNav.hidden = false; stepHeading.hidden = false; footnote.hidden = false;
+    doneBox.hidden = true;
+    renderUpload(); renderAllErr(); updateLabels();
+    goStep(1, true);
   });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (step === 1) { if (validate1()) { completed[1] = true; goStep(2, true); } }
+    else if (step === 2) { completed[2] = true; goStep(3, true); }
+    else if (step === 3) { if (validate3()) { completed[3] = true; goStep(4, true); } }
+    else if (step === 4) { if (validate4()) showDone(); }
+  });
+  goStep(1, false);
 
   // ---- Mobile bar: hidden while the hero button is on screen, so two buttons never show together ----
   var heroCta = document.getElementById('hero-cta');
@@ -1242,8 +1944,7 @@
     try {
       reviewDate.textContent = new Date('2026-09-15T12:00:00Z').toLocaleDateString(L.locale, { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
     } catch (e) {}
-    renderUpload(); renderErr('name'); renderErr('photo');
-    if (!status.hidden) status.textContent = t('status_ok');
+    renderUpload(); renderAllErr(); renderStep();
     updateLabels();
     if (save) { try { window.localStorage.setItem('petjar-lang', l); } catch (e) {} }
   }
